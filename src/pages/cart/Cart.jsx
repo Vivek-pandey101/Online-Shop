@@ -7,7 +7,7 @@ import { deleteFromCart } from "../../redux/cartSlice";
 import { toast } from "react-toastify";
 import { addDoc, collection } from "firebase/firestore";
 import { key, secret_key } from "../../../rjopy";
-import { fireDataBase } from "../../firebase/firebaseConfig";
+import { fireDataBase } from "../../firebase/FirestoreConfig";
 
 function Cart() {
   const context = useContext(myContext);

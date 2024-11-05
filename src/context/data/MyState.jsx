@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import MyContext from "./MyContext";
-import { fireDataBase } from "../../firebase/firebaseConfig";
+import { fireDataBase } from "../../firebase/FirestoreConfig";
 import {
   Timestamp,
   addDoc,
