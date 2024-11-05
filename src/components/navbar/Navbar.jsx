@@ -23,7 +23,6 @@ export default function Navbar() {
 
   const cartItem = useSelector((state) => state.cart);
 
-
   return (
     <div className="bg-white sticky top-0 z-50  ">
       {/* Mobile menu */}
@@ -241,38 +240,13 @@ export default function Navbar() {
                     </a>
                   ) : (
                     <Link
-                      to={"/signup"}
+                      to={"/login"}
                       className="text-sm font-medium text-gray-700 cursor-pointer  "
                       style={{ color: mode === "dark" ? "white" : "" }}
                     >
-                      Signup
+                      Login
                     </Link>
                   )}
-                </div>
-
-                <div className="hidden lg:ml-8 lg:flex">
-                  <a href="#" className="flex items-center text-gray-700 ">
-                    <img
-                      src="https://ecommerce-sk.vercel.app/img/indiaflag.png"
-                      alt=""
-                      className="block h-auto w-5 flex-shrink-0"
-                    />
-                    <span
-                      className="ml-3 block text-sm font-medium"
-                      style={{ color: mode === "dark" ? "white" : "" }}
-                    >
-                      INDIA
-                    </span>
-                  </a>
-                </div>
-                <div className="hidden lg:ml-8 lg:flex">
-                  <a href="#" className="flex items-center text-gray-700 ">
-                    <img
-                      className="inline-block w-10 h-10 rounded-full"
-                      src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
-                      alt="Dan_Abromov"
-                    />
-                  </a>
                 </div>
 
                 {/* Search */}

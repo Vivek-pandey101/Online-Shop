@@ -1,20 +1,16 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Filter from "../../components/filter/Filter";
 import Layout from "../../components/layout/Layout";
 import myContext from "../../context/data/MyContext";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Allproducts() {
   const context = useContext(myContext);
-  const {
-    mode,
-    product,
-    searchkey,
-    filterType,
-    filterPrice,
-  } = context;
+  const [user, setUser] = useState();
+  const { mode, product, searchkey, filterType, filterPrice } = context;
 
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart);
@@ -28,6 +24,12 @@ function Allproducts() {
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    setUser(localStorage.getItem("user"));
+  }, [cartItems]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -55,13 +57,7 @@ function Allproducts() {
               .map((item, index) => {
                 const { title, price, imageUrl, id } = item;
                 return (
-                  <div
-                    onClick={() =>
-                      (window.location.href = `/productinfo/${id}`)
-                    }
-                    key={index}
-                    className="p-4 md:w-1/4  drop-shadow-lg "
-                  >
+                  <div key={index} className="p-4 md:w-1/4  drop-shadow-lg ">
                     <div
                       className="h-full border-2 hover:shadow-gray-100 hover:shadow-2xl transition-shadow duration-300 ease-in-out    border-gray-200 border-opacity-60 rounded-2xl overflow-hidden"
                       style={{
@@ -71,6 +67,7 @@ function Allproducts() {
                     >
                       <div className="flex justify-center cursor-pointer">
                         <img
+                          onClick={() => navigate(`/productinfo/${id}`)}
                           className=" rounded-2xl w-full h-80 p-2 hover:scale-110 transition-scale-110  duration-300 ease-in-out"
                           src={imageUrl}
                           alt="blog"
@@ -89,7 +86,6 @@ function Allproducts() {
                         >
                           {title}
                         </h1>
-                        {/* <p className="leading-relaxed mb-3">{item.description.}</p> */}
                         <p
                           className="leading-relaxed mb-3"
                           style={{ color: mode === "dark" ? "white" : "" }}
@@ -97,13 +93,22 @@ function Allproducts() {
                           ₹{price}
                         </p>
                         <div className=" flex justify-center">
-                          <button
-                            type="button"
-                            onClick={() => addCart(item)}
-                            className="focus:outline-none text-white bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full  py-2"
-                          >
-                            Add To Cart
-                          </button>
+                          {user ? (
+                            <button
+                              type="button"
+                              onClick={() => addCart(item)}
+                              className="focus:outline-none text-white bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full  py-2"
+                            >
+                              Add To Cart
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => navigate("/login")}
+                              className="focus:outline-none text-white bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full  py-2"
+                            >
+                              Add To Cart
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>

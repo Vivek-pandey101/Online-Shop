@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import myContext from "../../context/data/MyContext";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -17,11 +17,16 @@ function ProductCard() {
   // add to cart
   const addCart = (product) => {
     dispatch(addToCart(product));
-    toast.success("add to cart");
+    toast.success("Added to cart");
   };
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  const [user, setUser] = useState();
+  useEffect(() => {
+    setUser(localStorage.getItem("user"));
   }, [cartItems]);
 
   return (
@@ -46,11 +51,7 @@ function ProductCard() {
             .map((item, index) => {
               const { title, price, imageUrl, id } = item;
               return (
-                <div
-                  className="p-4 md:w-1/4  drop-shadow-lg "
-                  key={index}
-                  onClick={() => navigate("/productInfo/" + id)}
-                >
+                <div className="p-4 md:w-1/4  drop-shadow-lg " key={index}>
                   <div
                     className="h-full border-2 hover:shadow-gray-100 hover:shadow-2xl transition-shadow duration-300 ease-in-out    border-gray-200 border-opacity-60 rounded-2xl overflow-hidden"
                     style={{
@@ -62,6 +63,7 @@ function ProductCard() {
                       <img
                         className=" rounded-2xl w-full h-80 p-2 hover:scale-110 transition-scale-110  duration-300 ease-in-out"
                         src={imageUrl}
+                        onClick={() => navigate("/productInfo/" + id)}
                         alt="blog"
                       />
                     </div>
@@ -85,13 +87,22 @@ function ProductCard() {
                         ₹ {price}
                       </p>
                       <div className=" flex justify-center">
-                        <button
-                          onClick={() => addCart(item)}
-                          type="button"
-                          className="focus:outline-none text-white bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full  py-2"
-                        >
-                          Add To Cart
-                        </button>
+                        {user ? (
+                          <button
+                            onClick={() => addCart(item)}
+                            type="button"
+                            className="focus:outline-none text-white bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full  py-2"
+                          >
+                            Add To Cart
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => navigate("/login")}
+                            className="focus:outline-none text-white bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full  py-2"
+                          >
+                            Add To Cart
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -99,10 +110,6 @@ function ProductCard() {
               );
             })}
         </div>
-        {/* <div className=" flex justify-center">
-                                            <button onClick={()=>addCart()} type="button" className="focus:outline-none text-white bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full  py-2">Add To Cart</button>
-
-                                        </div> */}
       </div>
     </section>
   );

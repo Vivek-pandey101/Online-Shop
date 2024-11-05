@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { addDoc, collection } from "firebase/firestore";
 import { key, secret_key } from "../../../rjopy";
 import { fireDataBase } from "../../firebase/FirestoreConfig";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
   const context = useContext(myContext);
@@ -16,6 +17,7 @@ function Cart() {
   const cartItem = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const deleteItem = (item) => {
     dispatch(deleteFromCart(item));
@@ -140,7 +142,11 @@ function Cart() {
                     className="w-full rounded-lg sm:w-40"
                   />
                   <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
-                    <div className="mt-5 sm:mt-0">
+                    <div
+                      className="mt-5 sm:mt-0"
+                      onClick={() => navigate("/productInfo/" + item.id)}
+                      style={{ cursor: "pointer" }}
+                    >
                       <h2
                         className="text-lg font-bold text-gray-900"
                         style={{ color: mode === "dark" ? "white" : "" }}
@@ -163,6 +169,7 @@ function Cart() {
                     <div
                       className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6"
                       onClick={() => deleteItem(item)}
+                      style={{ cursor: "pointer" }}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
