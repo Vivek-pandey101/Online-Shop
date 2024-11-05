@@ -117,7 +117,7 @@ function Cart() {
   return (
     <Layout>
       <div
-        className="h-screen bg-gray-100 pt-5 h-[100%]"
+        className="h-full bg-gray-100 pt-5"
         style={{
           backgroundColor: mode === "dark" ? "#282c34" : "",
           color: mode === "dark" ? "white" : "",
@@ -130,7 +130,7 @@ function Cart() {
               return (
                 <div
                   key={index}
-                  className="justify-between mb-6 rounded-lg border  drop-shadow-xl bg-white p-6  sm:flex  sm:justify-start"
+                  className="justify-between mb-6 rounded-lg border drop-shadow-xl bg-white p-6  sm:flex  sm:justify-start"
                   style={{
                     backgroundColor: mode === "dark" ? "rgb(32 33 34)" : "",
                     color: mode === "dark" ? "white" : "",
